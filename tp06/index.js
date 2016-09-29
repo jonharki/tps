@@ -45,36 +45,35 @@ var  ordenarTitulo = function () {
     peliculas.sort(compararTitulo)
 };
 
-
-
-   var agregarPeliculas = function (pelicula) {
-        var existe = false;
-       for (var i=0;(i < peliculas.length) && !existe; i++) {
-
-            if (peliculas[i].id === pelicula.id) {
-                existe = true;
-            }
+var validarPelicula = function(id){
+    var existe = -1;
+    for (i = 0; i < peliculas.length  && existe === -1; i++){
+        if (id === peliculas[i].id){
+            existe = i ;            
         }
-        if (!existe) {
+    }
+    return existe;
+}
+
+var agregarPelicula = function (pelicula) {
+
+var existe = validarPelicula(pelicula.id);
+
+    
+        if (existe === -1) {
             peliculas.push(pelicula);
         } else {
             alert('esta pelciula ya fue ingresada');
     }
-    
-        
+            
 }
 
-    var quitarPeliculas = function (idPelicula) {
-        var existe = false;
-        idPelicula = parseInt(prompt('ingrese id'));
-        for (i=0; i < peliculas.length && existe === false; i++){
-            if(peliculas[i].id===idPelicula){
-                existe = true;  
-                break;
-           }
-        } 
-      if (existe)
-      {peliculas.splice(i, 1);
+var quitarPelicula = function (id) {
+
+var existe = validarPelicula(id);
+       
+      if (existe != -1)
+      {peliculas.splice(existe, 1);
            }
       else {
            alert('esta pelicula no existe');
@@ -89,8 +88,8 @@ var  ordenarTitulo = function () {
     }
 
     return {
-        agregarPeliculas:agregarPeliculas,
-        quitarPeliculas:quitarPeliculas,
+        agregarPelicula:agregarPelicula,
+        quitarPelicula:quitarPelicula,
         ordenarId:ordenarId,
         ordenarTitulo:ordenarTitulo,
         obtenerPeliculas: obtenerPeliculas
