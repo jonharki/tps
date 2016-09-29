@@ -50,17 +50,22 @@ this.ordenarTitulo = function () {
     this.peliculas.sort(compararTitulo)
 };
 
+this.validarPelicula = function (pelicula) {
+    var existe = false;
+    var posicion = -1;
+    for (var i=0;(i < this.peliculas.length) && !existe; i++) {
 
-
-   this.agregarPeliculas = function (pelicula) {
-        var existe = false;
-       for (var i=0;(i < this.peliculas.length) && !existe; i++) {
-
-            if (this.peliculas[i].id === pelicula.id) {
+    if (this.peliculas[i].id === pelicula.id) {
                 existe = true;
+                posicion = i;
             }
         }
-        if (!existe) {
+ return {existe: existe, posicion:posicion};
+    }
+
+   this.agregarPelicula = function (pelicula) {
+        var obj = this.validarPelicula(pelicula);    
+        if (!obj.existe) {
             this.peliculas.push(pelicula);
         } else {
             alert('esta pelciula ya fue ingresada');
@@ -69,17 +74,10 @@ this.ordenarTitulo = function () {
         
 }
 
-   this.quitarPeliculas = function (idPelicula) {
-        var existe = false;
-        idPelicula = parseInt(prompt('ingrese id'));
-        for (i=0; i < this.peliculas.length && existe === false; i++){
-            if(this.peliculas[i].id===idPelicula){
-                existe = true;  
-                break;
-           }
-        } 
-      if (existe)
-      {this.peliculas.splice(i, 1);
+   this.quitarPelicula = function (pelicula) {
+        var obj = this.validarPelicula(pelicula); 
+      if (obj.existe)
+      {this.peliculas.splice(obj.posicion, 1);
            }
       else {
            alert('esta pelicula no existe');
@@ -88,8 +86,6 @@ this.ordenarTitulo = function () {
     }   
     
 }
-
-
 
 
 
